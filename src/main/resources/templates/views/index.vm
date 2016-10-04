@@ -1,0 +1,14 @@
+<h1>Index</h1>
+
+<h2>Department list</h2>
+<table border="1">
+    <tr>
+        <th>1</th>
+        <th>2</th>
+    </tr>
+    #foreach($item in $items)
+        <tr>
+            123
+        </tr>
+    #end
+</table>

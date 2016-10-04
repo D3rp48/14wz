@@ -1,0 +1,6 @@
+<form action="login" method="POST">
+    <input type="text" placeholder="E-mail" id="email">
+    <input type="password" placeholder="Password" id="password">
+    <input type="checkbox" id="rememberme" name="remember-me">
+    <!-- other fields... -->
+</form>

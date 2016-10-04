@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>$title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="content-language" content="ru">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta name="robots" content="index,follow">
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="/webjars/jquery/2.2.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .col-md-1, .col-md-2, .col-md-4, .col-md-6, .col-md-8 {
+            outline: 1px solid orange;
+            box-shadow: 0 0 5px black;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        html, body, .container {
+            height: 100%;
+        }
+
+        .container {
+            display: table;
+            width: 100%;
+            margin-top: -50px;
+            padding: 50px 0 0 0; /*set left/right padding according to needs*/
+            box-sizing: border-box;
+        }
+
+        .row {
+            height: 100%;
+            display: table-row;
+        }
+
+        .row:before {
+            content: normal;
+        }
+
+        .row .no-float {
+            display: table-cell;
+            float: none;
+        }
+
+        @media (min-width: 992px) {
+            .row .no-float {
+                display: table-cell;
+                float: none;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-4 no-float">
+                    <img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/" class="img-thumbnail">
+                </div>
+                <div class="col-md-8 no-float">
+                    <div class="row">
+                        <div class="col-md-12 no-float">
+                            <h3>
+                                h3. Lorem ipsum dolor sit amet.
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 no-float">
+                            <h3>
+                                h3. Lorem ipsum dolor sit amet.
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <ol>
+                        <li>
+                            Lorem ipsum dolor sit amet
+                        </li>
+                        <li>
+                            Consectetur adipiscing elit
+                        </li>
+                        <li>
+                            Integer molestie lorem at massa
+                        </li>
+                        <li>
+                            Facilisis in pretium nisl aliquet
+                        </li>
+                        <li>
+                            Nulla volutpat aliquam velit
+                        </li>
+                        <li>
+                            Faucibus porta lacus fringilla vel
+                        </li>
+                        <li>
+                            Aenean sit amet erat nunc
+                        </li>
+                        <li>
+                            Eget porttitor lorem
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-2 no-float">
+                    <img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/" class="img-thumbnail">
+                </div>
+                <div class="col-md-6 no-float">
+                    <div class="row">
+                        <div class="col-md-12 no-float">
+                            <h3>
+                                h3. Lorem ipsum dolor sit amet.
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 no-float">
+                            <h3>
+                                h3. Lorem ipsum dolor sit amet.
+                            </h3>
+                        </div>
+                        <div class="col-md-6 no-float">
+                            <img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 no-float">
+                    <h2>
+                        Heading
+                    </h2>
+                    <p>
+                        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
+                        tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
+                        malesuada magna mollis euismod. Donec sed odio dui.
+                    </p>
+                    <p>
+                        <a class="btn" href="#">View details »</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
