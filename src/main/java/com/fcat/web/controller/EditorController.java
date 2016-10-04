@@ -3,13 +3,20 @@ package com.fcat.web.controller;
 import com.fcat.data.dao.*;
 import com.fcat.data.model.*;
 import com.fcat.web.bean.*;
+import com.fcat.web.bean.forms.ImageUploadForm;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,6 +37,13 @@ public class EditorController {
     GroupPropertyDao groupPropertyDao;
     @Autowired
     ComponentDao componentDao;
+
+    private final static String FILE_BASE = ""; //TODO filebase
+    private final static List<String> IMAGE_FORMATS = new ArrayList<String>() {{
+        add("jpg");
+        add("jpeg");
+        add("png");
+    }};
 
     @RequestMapping(value = "/items", method = RequestMethod.GET)
     public
@@ -101,6 +115,7 @@ public class EditorController {
         return jqGridBean;
     }
 
+    @Secured({"ROLE_ADMIN"})
     @RequestMapping(value = "/items/edit", method = RequestMethod.POST)
     public
     @ResponseBody
@@ -115,6 +130,7 @@ public class EditorController {
         return new JsonResponse(true, "ok");
     }
 
+    @Secured({"ROLE_ADMIN"})
     @RequestMapping(value = "/groups/edit", method = RequestMethod.POST)
     public
     @ResponseBody
@@ -129,6 +145,7 @@ public class EditorController {
         return new JsonResponse(true, "ok");
     }
 
+    @Secured({"ROLE_ADMIN"})
     @RequestMapping(value = "/images/edit", method = RequestMethod.POST)
     public
     @ResponseBody
@@ -143,6 +160,7 @@ public class EditorController {
         return new JsonResponse(true, "ok");
     }
 
+    @Secured({"ROLE_ADMIN"})
     @RequestMapping(value = "/itemtypes/edit", method = RequestMethod.POST)
     public
     @ResponseBody
@@ -157,6 +175,7 @@ public class EditorController {
         return new JsonResponse(true, "ok");
     }
 
+    @Secured({"ROLE_ADMIN"})
     @RequestMapping(value = "/recipes/edit", method = RequestMethod.POST)
     public
     @ResponseBody
@@ -171,5 +190,43 @@ public class EditorController {
         return new JsonResponse(true, "ok");
     }
 
+    @Secured({"ROLE_ADMIN"})
+    @RequestMapping(value = "/files/upload")
+    public String uploadImage(ImageUploadForm form) {
+        CommonsMultipartFile file = form.getFile();
+        Image image = new Image();
+        OutputStream outputStream = null;
+        InputStream inputStream = null;
+        try {
+            String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+            if (!IMAGE_FORMATS.contains(extension.toLowerCase())) {
+                return null;
+            }
+            String fileName = FILE_BASE + "/files/" + file.getName() + "." + extension;
+            File outputFile = new File(fileName);
+            if (!outputFile.exists()) {
+                try {
+                    outputFile.getParentFile().mkdirs();
+                    outputFile.createNewFile();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            outputStream = new FileOutputStream(outputFile);
+            inputStream = new BufferedInputStream(file.getInputStream());
+            byte[] buf = new byte[64 * 1024];
+            int read;
+            while ((read = inputStream.read(buf)) > 0) {
+                outputStream.write(buf, 0, read);
+            }
+            return extension;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(inputStream);
+            IOUtils.closeQuietly(outputStream);
+        }
+        return "ok";
+    }
 
 }
