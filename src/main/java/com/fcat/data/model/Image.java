@@ -26,6 +26,9 @@ public class Image implements Serializable {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getLabel() {
         return label;

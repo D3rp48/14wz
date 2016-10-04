@@ -16,6 +16,10 @@ public class Component implements Serializable {
     @Transient
     private List<Component> alternatives;
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

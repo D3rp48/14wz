@@ -13,8 +13,9 @@ public class ItemType implements Serializable {
     private String label;
     private String description;
     @Transient
-    private List<Item> Items;
-
+    private List<Item> items;
+    @Transient
+    private List<ItemSubtype> subtypes;
     String getLabel() {
         return label;
     }
@@ -32,11 +33,19 @@ public class ItemType implements Serializable {
     }
 
     public List<Item> getItems() {
-        return Items;
+        return items;
     }
 
     public void setItems(List<Item> items) {
-        Items = items;
+        this.items = items;
+    }
+
+    public List<ItemSubtype> getSubtypes() {
+        return subtypes;
+    }
+
+    public void setSubtypes(List<ItemSubtype> subtypes) {
+        this.subtypes = subtypes;
     }
 
     @Override

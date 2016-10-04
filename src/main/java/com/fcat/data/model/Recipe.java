@@ -20,6 +20,10 @@ public class Recipe implements Serializable {
     @JoinColumn(name = "itemId")
     private Item item;
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

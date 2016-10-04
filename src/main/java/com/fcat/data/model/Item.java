@@ -17,10 +17,26 @@ public class Item implements Serializable {
     @JoinColumn(name = "itemTypeId")
     private ItemType type;
     @ManyToOne
+    @JoinColumn(name = "itemSubtypeId")
+    private ItemSubtype subtype;
+
+    @ManyToOne
     @JoinColumn(name = "imageId")
     private Image image;
     @Transient
     private List<ItemProperty> itemProperties;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public ItemSubtype getSubtype() {
+        return subtype;
+    }
+
+    public void setSubtype(ItemSubtype subtype) {
+        this.subtype = subtype;
+    }
 
     public List<ItemProperty> getItemProperties() {
         return itemProperties;

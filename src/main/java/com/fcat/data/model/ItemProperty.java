@@ -17,6 +17,10 @@ public class ItemProperty implements Serializable {
     private GroupProperty property;
     private String value;
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getKey() {
         return property.getLabel();
     }
