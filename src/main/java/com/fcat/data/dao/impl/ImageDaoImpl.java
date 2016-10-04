@@ -5,7 +5,7 @@ import com.fcat.data.model.Image;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ImageDaoImpl extends GenericDaoImpl<Image, Integer> implements ImageDao {
+public class ImageDaoImpl extends GenericDaoImpl<Image, String> implements ImageDao {
     public ImageDaoImpl() {
         super(Image.class);
     }

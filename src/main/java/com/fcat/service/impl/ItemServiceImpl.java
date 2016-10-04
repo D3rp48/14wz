@@ -1,5 +1,6 @@
 package com.fcat.service.impl;
 
+import com.fcat.data.dao.ItemDao;
 import com.fcat.data.dao.impl.ItemDaoImpl;
 import com.fcat.data.model.Item;
 import com.fcat.service.ItemService;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 public class ItemServiceImpl implements ItemService {
     @Autowired
-    ItemDaoImpl itemDao;
+    ItemDao itemDao;
 
     @Override
     public List<Item> getAll() {

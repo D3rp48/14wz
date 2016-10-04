@@ -11,8 +11,7 @@ import java.util.Objects;
 @Entity
 public class Image implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private String url;
     private String label;
     private LocalDateTime addedDate;
     private String tag;
@@ -22,13 +21,14 @@ public class Image implements Serializable {
         addedDate = LocalDateTime.now();
     }
 
-    public int getId() {
-        return id;
+    public String getUrl() {
+        return url;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUrl(String url) {
+        this.url = url;
     }
+
 
     public String getLabel() {
         return label;
