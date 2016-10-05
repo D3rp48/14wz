@@ -11,6 +11,22 @@ public class ImageUploadForm implements Serializable {
     private String label;
     private String tag;
     private String caption;
+    private String url;
+
+    public void fillForm(Image image) {
+        setLabel(image.getLabel());
+        setUrl(image.getUrl());
+        setTag(image.getTag());
+        setCaption(image.getCaption());
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getLabel() {
         return label;

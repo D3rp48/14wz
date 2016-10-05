@@ -2,8 +2,7 @@ package com.fcat.data.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class Component implements Serializable {
@@ -14,8 +13,19 @@ public class Component implements Serializable {
     private int amount;
     private Recipe recipe;
     @Transient
-    private List<Component> alternatives;
+    private Set<Component> alternatives;
 
+    public Component() {
+        alternatives = new LinkedHashSet<>();
+    }
+
+    public void addAlternative(Component component) {
+        alternatives.add(component);
+    }
+
+    public void removeAlternative(Component component) {
+        alternatives.remove(component);
+    }
     public void setId(int id) {
         this.id = id;
     }
@@ -48,11 +58,11 @@ public class Component implements Serializable {
         this.recipe = recipe;
     }
 
-    public List<Component> getAlternatives() {
+    public Set<Component> getAlternatives() {
         return alternatives;
     }
 
-    public void setAlternatives(List<Component> alternatives) {
+    public void setAlternatives(Set<Component> alternatives) {
         this.alternatives = alternatives;
     }
 

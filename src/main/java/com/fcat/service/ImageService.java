@@ -11,6 +11,8 @@ public interface ImageService {
 
     List<Image> findByExpressionsPaged(Integer rows, Integer page);
 
+    Image getImage(String url);
+
     String uploadImage(CommonsMultipartFile file, String label, String caption, String tag);
 
     void removeImage(String fileName);
@@ -18,5 +20,6 @@ public interface ImageService {
     void removeImage(Image image);
 
     void removeImage(CommonsMultipartFile file);
+
 
 }

@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(collectionResourceRel = "itemsubtype", path = "crud/itemsubtypes")
-public interface ItemSubtypeRepository extends CrudRepository<Image, String> {
+public interface ItemSubtypeRepository extends CrudRepository<Image, Integer> {
 }

@@ -47,6 +47,11 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
+    public Image getImage(String url) {
+        return imageDao.getById(url);
+    }
+
+    @Override
     public String uploadImage(CommonsMultipartFile file, String label, String caption, String tag) {
         Image image = new Image();
         image.setUrl(getName(file));

@@ -55,17 +55,17 @@
         <tr>
             <td class="tg-yw4l">
                 <div id="input">Label:</div>
-                <input type="text" id="label"></td>
+                <input type="text" id="label">$label</td>
         </tr>
         <tr>
             <td class="tg-yw4l">
                 <div id="input">Tag:</div>
-                <input type="text" id="tag"></td>
+                <input type="text" id="tag">$tag</td>
         </tr>
         <tr>
             <td class="tg-yw4l">
                 <div id="input">Caption:</div>
-                <input type="text" id="caption"></td>
+                <input type="text" id="caption">$caption</td>
         </tr>
         <tr>
             <td class="tg-yw4l">

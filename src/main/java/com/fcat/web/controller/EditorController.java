@@ -5,11 +5,13 @@ import com.fcat.data.model.*;
 import com.fcat.service.ImageService;
 import com.fcat.web.bean.*;
 import com.fcat.web.bean.forms.ImageUploadForm;
+import com.google.common.base.Strings;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -140,12 +142,24 @@ public class EditorController {
         return new JsonResponse(true, "ok");
     }
 
+    @RequestMapping(value = "/images/edit", method = RequestMethod.GET)
+    public String imagesEditGet(Model model, @RequestParam("imageUrl") String param) {
+        ImageUploadForm form = new ImageUploadForm();
+        if (!Strings.isNullOrEmpty(param)) {
+            Image image = imageService.getImage(param);
+            if (image != null) {
+                form.fillForm(image);
+            }
+        }
+        model.addAttribute("imageUpload", form);
+        return "fragments/_imgupload";
+    }
+
     @Secured({"ROLE_ADMIN"})
     @RequestMapping(value = "/images/edit", method = RequestMethod.POST)
     public
     @ResponseBody
     JsonResponse imagesEdit(ImageUploadForm form, @RequestParam("op") String param) {
-
         switch (param) {
             case "add":
             case "edit": {

@@ -14,9 +14,6 @@ public class Item implements Serializable {
     private String label;
     private String description;
     @ManyToOne
-    @JoinColumn(name = "itemTypeId")
-    private ItemType type;
-    @ManyToOne
     @JoinColumn(name = "itemSubtypeId")
     private ItemSubtype subtype;
 
@@ -66,14 +63,6 @@ public class Item implements Serializable {
         this.description = description;
     }
 
-    public ItemType getType() {
-        return type;
-    }
-
-    public void setType(ItemType type) {
-        this.type = type;
-    }
-
     public Image getImage() {
         return image;
     }
@@ -88,11 +77,11 @@ public class Item implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
         return Objects.equals(getLabel(), item.getLabel()) &&
-                Objects.equals(getType(), item.getType());
+                Objects.equals(getSubtype(), item.getSubtype());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getLabel(), getType());
+        return Objects.hash(getLabel(), getSubtype());
     }
 }

@@ -1,0 +1,56 @@
+#macro(categoryEditTreeAdmin $node)
+<li class="dd-item" data-id="$node.importInfo.prefix$node.outerId">
+    <div class="dd-handle">
+        (№$node.id)
+        <b>
+            #if ($node.info.name)
+                <s>$node.name</s>&nbsp; $node.info.name
+            #else
+                $node.name
+            #end
+        </b>
+        <div class="pull-right action-buttons">
+            <a class="blue action-edit" href="#">
+                <i class="icon-pencil bigger-130"></i>
+            </a>
+
+        #* <a class="red action-trash" href="#">
+             <i class="icon-trash bigger-130"></i>
+         </a>*#
+        </div>
+    </div>
+
+    #if ($node.children.size() > 0)
+        <ol class="dd-list">
+            #foreach ($child in $node.children)
+                #categoryEditTreeAdmin($child)
+            #end
+        </ol>
+    #end
+</li>
+#end
+
+<head>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="/webjars/jquery/2.2.1/jquery.min.js"></script>
+</head>
+<body>
+<table class="table">
+    #foreach($itemtype in $itemtypes)
+        <tr>
+            <th class="tg-yw4l" rowspan="$itemtype.subtypes.size()">$group.label
+                <button class="warning" id="$group.label">edit</button>
+            </th>
+        </tr>
+
+        #foreach($subtype in $itemtype.subtypes)
+            <tr>
+                <th class="tg-yw4l">$subtype.label
+                    <button class="warning" id="$subtype.label">edit</button>
+                </th>
+            </tr>
+        #end
+    #end
+</table>
+</body>

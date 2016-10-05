@@ -2,8 +2,10 @@ package com.fcat.data.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Recipe implements Serializable {
@@ -15,11 +17,28 @@ public class Recipe implements Serializable {
     @JoinColumn(name = "imageId")
     private Image image;
     @Transient
-    private List<Component> components;
+    private Set<Component> components;
     @ManyToOne
     @JoinColumn(name = "itemId")
     private Item item;
 
+    public Recipe(Item item) {
+        this.item = item;
+        components = new LinkedHashSet<>();
+    }
+
+    public void addComponent(Component component) {
+        component.setRecipe(this);
+        components.add(component);
+    }
+
+    public void removeComponent(Component component) {
+        if (!component.getRecipe().equals(this)) {
+            return;
+        }
+        component.setRecipe(null);
+        components.remove(component);
+    }
     public void setId(int id) {
         this.id = id;
     }
@@ -44,11 +63,11 @@ public class Recipe implements Serializable {
         this.image = image;
     }
 
-    public List<Component> getComponents() {
+    public Set<Component> getComponents() {
         return components;
     }
 
-    public void setComponents(List<Component> components) {
+    public void setComponents(Set<Component> components) {
         this.components = components;
     }
 

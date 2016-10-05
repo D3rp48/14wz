@@ -6,6 +6,7 @@ import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class GroupType implements Serializable {
@@ -13,13 +14,25 @@ public class GroupType implements Serializable {
     private String label;
     private int priority;
     @Transient
-    private List<GroupProperty> properties;
+    private Set<GroupProperty> properties;
 
-    public List<GroupProperty> getProperties() {
+    public void addProperty(GroupProperty property) {
+        property.setGroupType(this);
+        properties.add(property);
+    }
+
+    public void removeProperty(GroupProperty property) {
+        if (!property.getGroupType().equals(this))
+            return;
+        property.setGroupType(null);
+        properties.remove(property);
+    }
+
+    public Set<GroupProperty> getProperties() {
         return properties;
     }
 
-    public void setProperties(List<GroupProperty> properties) {
+    public void setProperties(Set<GroupProperty> properties) {
         this.properties = properties;
     }
 

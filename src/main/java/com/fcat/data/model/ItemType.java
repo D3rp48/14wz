@@ -4,8 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class ItemType implements Serializable {
@@ -13,9 +12,28 @@ public class ItemType implements Serializable {
     private String label;
     private String description;
     @Transient
-    private List<Item> items;
-    @Transient
-    private List<ItemSubtype> subtypes;
+    private Set<ItemSubtype> subtypes;
+
+    public ItemType() {
+        subtypes = new LinkedHashSet<>();
+    }
+
+    public void addSubtype(ItemSubtype subtype) {
+        subtype.setItemType(this);
+        subtypes.add(subtype);
+    }
+
+    public void removeSubtype(ItemSubtype subtype) {
+        if (!subtype.getItemType().equals(this))
+            return;
+        subtype.setItemType(null);
+        subtypes.remove(subtype);
+    }
+
+    public void deleteSubtype(ItemSubtype subtype) {
+        subtypes.remove(subtype);
+    }
+
     String getLabel() {
         return label;
     }
@@ -32,19 +50,11 @@ public class ItemType implements Serializable {
         this.description = description;
     }
 
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
-    public List<ItemSubtype> getSubtypes() {
+    public Set<ItemSubtype> getSubtypes() {
         return subtypes;
     }
 
-    public void setSubtypes(List<ItemSubtype> subtypes) {
+    public void setSubtypes(Set<ItemSubtype> subtypes) {
         this.subtypes = subtypes;
     }
 
