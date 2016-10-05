@@ -3,8 +3,10 @@ package com.fcat.data.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Item implements Serializable {
@@ -13,15 +15,16 @@ public class Item implements Serializable {
     private int id;
     private String label;
     private String description;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "itemSubtypeId")
     private ItemSubtype subtype;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "imageId")
     private Image image;
-    @Transient
-    private List<ItemProperty> itemProperties;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH})
+    private Set<ItemProperty> itemProperties = new LinkedHashSet<>();
 
     public void setId(int id) {
         this.id = id;
@@ -35,11 +38,11 @@ public class Item implements Serializable {
         this.subtype = subtype;
     }
 
-    public List<ItemProperty> getItemProperties() {
+    public Set<ItemProperty> getItemProperties() {
         return itemProperties;
     }
 
-    public void setItemProperties(List<ItemProperty> itemProperties) {
+    public void setItemProperties(Set<ItemProperty> itemProperties) {
         this.itemProperties = itemProperties;
     }
 

@@ -11,13 +11,10 @@ public class Component implements Serializable {
     private int id;
     private Item item;
     private int amount;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private Recipe recipe;
-    @Transient
-    private Set<Component> alternatives;
-
-    public Component() {
-        alternatives = new LinkedHashSet<>();
-    }
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private Set<Component> alternatives = new LinkedHashSet<>();
 
     public void addAlternative(Component component) {
         alternatives.add(component);

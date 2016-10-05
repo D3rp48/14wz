@@ -1,9 +1,8 @@
 package com.fcat.data.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -13,20 +12,8 @@ public class GroupType implements Serializable {
     @Id
     private String label;
     private int priority;
-    @Transient
-    private Set<GroupProperty> properties;
-
-    public void addProperty(GroupProperty property) {
-        property.setGroupType(this);
-        properties.add(property);
-    }
-
-    public void removeProperty(GroupProperty property) {
-        if (!property.getGroupType().equals(this))
-            return;
-        property.setGroupType(null);
-        properties.remove(property);
-    }
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    private Set<GroupProperty> properties = new LinkedHashSet<>();
 
     public Set<GroupProperty> getProperties() {
         return properties;

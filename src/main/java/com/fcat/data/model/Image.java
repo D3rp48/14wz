@@ -1,5 +1,8 @@
 package com.fcat.data.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +16,9 @@ public class Image implements Serializable {
     @Id
     private String url;
     private String label;
+
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "CET")
     private LocalDateTime addedDate;
     private String tag;
     private String caption;
@@ -28,7 +34,6 @@ public class Image implements Serializable {
     public void setUrl(String url) {
         this.url = url;
     }
-
 
     public String getLabel() {
         return label;

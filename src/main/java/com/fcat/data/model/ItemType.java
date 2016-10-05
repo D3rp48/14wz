@@ -1,8 +1,6 @@
 package com.fcat.data.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
@@ -11,7 +9,7 @@ public class ItemType implements Serializable {
     @Id
     private String label;
     private String description;
-    @Transient
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<ItemSubtype> subtypes;
 
     public ItemType() {
@@ -28,6 +26,14 @@ public class ItemType implements Serializable {
             return;
         subtype.setItemType(null);
         subtypes.remove(subtype);
+    }
+
+    public void addGroupType(GroupType groupType) {
+        subtypes.forEach(x -> x.addGroup(groupType));
+    }
+
+    public void removeGroupType(GroupType groupType) {
+        subtypes.forEach(x -> x.removeGroup(groupType));
     }
 
     public void deleteSubtype(ItemSubtype subtype) {

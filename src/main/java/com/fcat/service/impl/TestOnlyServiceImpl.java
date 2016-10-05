@@ -51,8 +51,8 @@ public class TestOnlyServiceImpl implements TestOnlyService {
         ItemSubtype subtype = new ItemSubtype();
         subtype.setLabel("Клинки");
         type.addSubtype(subtype);
-        subtypeDao.save(subtype);
-        itemTypeDao.save(type);
+        //subtypeDao.save(subtype);
+        //itemTypeDao.save(type);
         item.setSubtype(subtype);
         item.setImage(image);
         itemDao.save(item);
