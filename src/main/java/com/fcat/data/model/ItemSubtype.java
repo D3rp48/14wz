@@ -71,4 +71,12 @@ public class ItemSubtype implements Serializable {
     public void setLabel(String label) {
         this.label = label;
     }
+
+    public Set<GroupType> getGroupTypes() {
+        return groupTypes;
+    }
+
+    public void setGroupTypes(Set<GroupType> groupTypes) {
+        this.groupTypes = groupTypes;
+    }
 }
