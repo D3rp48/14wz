@@ -1,12 +1,11 @@
 package com.fcat.data.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Item implements Serializable {
@@ -15,19 +14,33 @@ public class Item implements Serializable {
     private int id;
     private String label;
     private String description;
+    @JsonIgnoreProperties({"items", "propertyGroups"})
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "itemSubtypeId")
     private ItemSubtype subtype;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "item"})
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    private Recipe recipe;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "imageId")
     private Image image;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "item"})
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH})
-    private Set<ItemProperty> itemProperties = new LinkedHashSet<>();
+    private Set<ItemProperty> itemProperties = new HashSet<>();
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+
+        this.recipe = recipe;
     }
 
     public ItemSubtype getSubtype() {

@@ -40,6 +40,7 @@ abstract public class GenericDaoImpl<T, PK extends Serializable> implements Gene
     }
 
     public void save(T newInstance) {
+
         getSession().saveOrUpdate(newInstance);
     }
 
@@ -53,6 +54,11 @@ abstract public class GenericDaoImpl<T, PK extends Serializable> implements Gene
         for (T instance : instances) {
             getSession().merge(instance);
         }
+    }
+
+    @Override
+    public void merge(T object) {
+        getSession().merge(object);
     }
 
     @SuppressWarnings("unchecked")

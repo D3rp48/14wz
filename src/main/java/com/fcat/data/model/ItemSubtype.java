@@ -1,11 +1,10 @@
 package com.fcat.data.model;
 
-import javax.annotation.Generated;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,16 +12,18 @@ public class ItemSubtype implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int Id;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "subtypes"})
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "typeId")
     private ItemType itemType;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
     private Set<Item> items = new LinkedHashSet<>();
     private String label;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
-    private Set<GroupType> groupTypes = new LinkedHashSet<>();
+    private Set<PropertyGroup> propertyGroups = new LinkedHashSet<>();
 
     public void addItem(Item item) {
         items.add(item);
@@ -32,12 +33,12 @@ public class ItemSubtype implements Serializable {
         items.remove(item);
     }
 
-    public void addGroup(GroupType type) {
-        groupTypes.add(type);
+    public void addGroup(PropertyGroup type) {
+        propertyGroups.add(type);
     }
 
-    public void removeGroup(GroupType type) {
-        groupTypes.remove(type);
+    public void removeGroup(PropertyGroup type) {
+        propertyGroups.remove(type);
     }
 
     public int getId() {
@@ -72,11 +73,11 @@ public class ItemSubtype implements Serializable {
         this.label = label;
     }
 
-    public Set<GroupType> getGroupTypes() {
-        return groupTypes;
+    public Set<PropertyGroup> getPropertyGroups() {
+        return propertyGroups;
     }
 
-    public void setGroupTypes(Set<GroupType> groupTypes) {
-        this.groupTypes = groupTypes;
+    public void setPropertyGroups(Set<PropertyGroup> propertyGroups) {
+        this.propertyGroups = propertyGroups;
     }
 }

@@ -16,6 +16,8 @@ public interface GenericDao<T, PK> {
 
     public void saveAll(Collection<T> instances);
 
+    public void merge(T object);
+
     public void mergeAll(Collection<T> instances);
 
     public T getById(PK id);

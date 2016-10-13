@@ -1,6 +1,6 @@
 package com.fcat.data.dao;
 
-import com.fcat.data.model.GroupType;
+import com.fcat.data.model.PropertyGroup;
 
-public interface GroupDao extends GenericDao<GroupType, String> {
+public interface GroupDao extends GenericDao<PropertyGroup, String> {
 }

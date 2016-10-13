@@ -1,13 +1,13 @@
 package com.fcat.web.controller;
 
 import com.fcat.data.dao.*;
+import com.fcat.data.dao.PropertyGroupDao;
 import com.fcat.data.model.*;
 import com.fcat.service.ImageService;
+import com.fcat.service.TestOnlyService;
 import com.fcat.web.bean.*;
 import com.fcat.web.bean.forms.ImageUploadForm;
 import com.google.common.base.Strings;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,18 +26,27 @@ public class EditorController {
     @Autowired
     ItemDao itemDao;
     @Autowired
-    GroupDao groupDao;
+    PropertyGroupDao propertiesGroupDao;
     @Autowired
     RecipeDao recipeDao;
     @Autowired
     ItemPropertyDao itemPropertyDao;
     @Autowired
-    GroupPropertyDao groupPropertyDao;
+    PropertyKeyDao propertyKeyDao;
     @Autowired
     ComponentDao componentDao;
     @Autowired
     ImageService imageService;
+    @Autowired
+    TestOnlyService testOnlyService;
 
+    @RequestMapping(value = "/editor", method = RequestMethod.GET)
+    public String editor(Model model) {
+        testOnlyService.generate();
+        List<Item> items = itemDao.list();
+        model.addAttribute("items", items);
+        return "fragments/_items";
+    }
 
     @RequestMapping(value = "/items", method = RequestMethod.GET)
     public
@@ -60,9 +66,9 @@ public class EditorController {
     public
     @ResponseBody
     JqGridBean groups(@RequestParam("page") Integer page, @RequestParam("rows") Integer rows) {
-        List<GroupType> groups = groupDao.findByExpressionsPaged(rows, page);
+        List<PropertyKey> groups = propertiesGroupDao.findByExpressionsPaged(rows, page);
         int count = groups.size();
-        JqGridBean<GroupType> jqGridBean = new JqGridBean<>();
+        JqGridBean<PropertyKey> jqGridBean = new JqGridBean<>();
         jqGridBean.setTotal((int) (count - 1) / rows + 1);
         jqGridBean.setPage(page.toString());
         jqGridBean.setRecords(Long.toString(count));
@@ -131,13 +137,13 @@ public class EditorController {
     @RequestMapping(value = "/groups/edit", method = RequestMethod.POST)
     public
     @ResponseBody
-    JsonResponse groupsEdit(GroupType groupType, @RequestParam("op") String param) {
+    JsonResponse groupsEdit(PropertyKey propertyKey, @RequestParam("op") String param) {
         switch (param) {
             case "add":
             case "edit":
-                groupDao.save(groupType);
+                this.propertiesGroupDao.save(propertyKey);
             case "delete":
-                groupDao.delete(groupType);
+                this.propertiesGroupDao.delete(propertyKey);
         }
         return new JsonResponse(true, "ok");
     }

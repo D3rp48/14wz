@@ -1,0 +1,32 @@
+#macro(rows $items)
+    #foreach($item in $items)
+    <tr>
+        <th>$item.label</th>
+        <th><img src="$item.image.url" alt="$item.image.tag"></img></th>
+        <th>$item.subtype.itemType.label</th>
+        <th>$item.subtype.label</th>
+        <th>#foreach($property in $item.getItemProperties())
+            $property.propertyKey.propertyGroup.label $property.propertyKey.label $property.value
+            #end</th>
+        <th>
+            <button class="button">...</button>
+            <button class="button">x</button>
+        </th>
+    </tr>
+    #end
+#end
+<table class="table">
+    <tr>
+        <th class="tg-031e">Label</th>
+        <th class="tg-031e">Image</th>
+        <th class="tg-yw4l">Type</th>
+        <th class="tg-yw4l">Subtype</th>
+        <th class="tg-yw4l">Properties</th>
+        <th class="tg-yw4l">Recipe</th>
+    </tr>
+    #rows($items)
+</table>
+
+<script>
+
+</script>

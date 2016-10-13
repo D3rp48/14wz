@@ -1,28 +1,30 @@
 package com.fcat.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class GroupType implements Serializable {
+public class PropertyGroup implements Serializable {
     @Id
     private String label;
     private int priority;
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
-    private Set<GroupProperty> properties = new LinkedHashSet<>();
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "propertykey"})
 
-    public Set<GroupProperty> getProperties() {
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    private Set<PropertyKey> properties = new LinkedHashSet<>();
+
+    public Set<PropertyKey> getProperties() {
         return properties;
     }
 
-    public void setProperties(Set<GroupProperty> properties) {
+    public void setProperties(Set<PropertyKey> properties) {
         this.properties = properties;
     }
-
 
     public String getLabel() {
         return label;
@@ -44,8 +46,8 @@ public class GroupType implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GroupType groupType = (GroupType) o;
-        return Objects.equals(getLabel(), groupType.getLabel());
+        PropertyGroup propertyGroup = (PropertyGroup) o;
+        return Objects.equals(getLabel(), propertyGroup.getLabel());
     }
 
     @Override

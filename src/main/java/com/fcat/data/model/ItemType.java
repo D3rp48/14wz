@@ -1,5 +1,8 @@
 package com.fcat.data.model;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
@@ -9,11 +12,13 @@ public class ItemType implements Serializable {
     @Id
     private String label;
     private String description;
+    @JsonIgnoreProperties({"items"})
+
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
-    private Set<ItemSubtype> subtypes;
+    private List<ItemSubtype> subtypes;
 
     public ItemType() {
-        subtypes = new LinkedHashSet<>();
+        subtypes = new ArrayList<>();
     }
 
     public void addSubtype(ItemSubtype subtype) {
@@ -28,19 +33,19 @@ public class ItemType implements Serializable {
         subtypes.remove(subtype);
     }
 
-    public void addGroupType(GroupType groupType) {
-        subtypes.forEach(x -> x.addGroup(groupType));
+    public void addGroupType(PropertyGroup propertyGroup) {
+        subtypes.forEach(x -> x.addGroup(propertyGroup));
     }
 
-    public void removeGroupType(GroupType groupType) {
-        subtypes.forEach(x -> x.removeGroup(groupType));
+    public void removeGroupType(PropertyGroup propertyGroup) {
+        subtypes.forEach(x -> x.removeGroup(propertyGroup));
     }
 
     public void deleteSubtype(ItemSubtype subtype) {
         subtypes.remove(subtype);
     }
 
-    String getLabel() {
+    public String getLabel() {
         return label;
     }
 
@@ -56,11 +61,11 @@ public class ItemType implements Serializable {
         this.description = description;
     }
 
-    public Set<ItemSubtype> getSubtypes() {
+    public List<ItemSubtype> getSubtypes() {
         return subtypes;
     }
 
-    public void setSubtypes(Set<ItemSubtype> subtypes) {
+    public void setSubtypes(List<ItemSubtype> subtypes) {
         this.subtypes = subtypes;
     }
 

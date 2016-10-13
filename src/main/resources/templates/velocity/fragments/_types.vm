@@ -1,0 +1,96 @@
+<head>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="/webjars/jquery/2.2.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<style>
+
+    input[type=text] {
+        border-radius: 2px;
+        padding-right: 4px;
+    }
+
+    .changed {
+        border-color: yellow;
+    }
+</style>
+<table class="table" id="types">
+    <tr>
+        <th class="col-md-2">
+            <div><label>Тип</label>
+                <button onclick="addType()">add</button>
+            </div>
+        </th>
+        <th class="col-md-10">
+            <div><label>Подтип</label>
+                <button onclick="addSubtype()">add</button>
+            </div>
+        </th>
+    </tr>
+
+    #foreach($type in $types.itemTypeList)
+    <tr>
+        <td #if($types.selectedType and $foreach.index == $types.selectedType) class="selected" #else class="row" #end
+                                                                               id="$foreach.index"
+            #if($types.selectedType and $foreach.index == $types.selectedType)
+                                                                               rowspan="$type.subtypes.size()"
+            #end>
+            <div>
+                <label onclick="location.reload();location.href='?selected=$foreach.index'">$type.label</label>
+                <button onclick="delete()">delete</button>
+            </div>
+        </td>
+        #foreach($subtype in $types.subtypes)
+            #if($foreach.index > 0)
+                <tr>
+                    <td class="subtype" id="$foreach.index">
+                        <div>
+                            <input type="text" value="$subtype.label"/>
+                            <button onclick="delete()">delete</button>
+                        </div>
+                    </td>
+                </tr>
+            #else
+                <td class="subtype" id="$foreach.index">
+                    <div>
+                        <input type="text" value="$subtype.label">
+                        <button onclick="delete()">delete</button>
+                    </div>
+                </td>
+                </tr>
+            #end
+        #end
+    #end
+</table>
+<button onclick="applyChanges()" class="error" id="applyChanges">Apply changes</button>
+<script>
+    jQuery('input[type=text]').on('input change propertychange paste', function () {
+        $(this).addClass('changed');
+    });
+    function enableApplyButton() {
+        $('#applyChanges').removeClass("error");
+        $('#applyChanges').addClass("success");
+    }
+    function disableApplyButton() {
+        $('#applyChanges').removeClass("success");
+        $('#applyChanges').addClass("error");
+    }
+    function applyChanges() {
+
+    }
+    function addType() {
+        $("#types tr:first").after("<tr><td>val</td><td>val2</td></tr>");
+    }
+    function addSubtype() {
+        $("#types tr:first").after("<tr><td>val</td><td>val2</td></tr>");
+    }
+    /*        jQuery('input[type=text]').on('click', function() {
+                if($(this).hasClass('selected')){
+                    $(this).removeClass('selected');
+                } else {
+                    jQuery('.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });*/
+</script>

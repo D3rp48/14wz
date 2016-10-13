@@ -1,5 +1,7 @@
 package com.fcat.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
@@ -9,8 +11,11 @@ public class Component implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private Item item;
     private int amount;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "component"})
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private Recipe recipe;
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
@@ -52,6 +57,7 @@ public class Component implements Serializable {
     }
 
     public void setRecipe(Recipe recipe) {
+
         this.recipe = recipe;
     }
 

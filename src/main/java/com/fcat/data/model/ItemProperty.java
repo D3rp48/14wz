@@ -1,5 +1,7 @@
 package com.fcat.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -9,12 +11,14 @@ public class ItemProperty implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "itemId")
     private Item item;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "groupPropertyId")
-    private GroupProperty property;
+    private PropertyKey propertyKey;
     private String value;
 
     public void setId(int id) {
@@ -22,7 +26,7 @@ public class ItemProperty implements Serializable {
     }
 
     public String getKey() {
-        return property.getLabel();
+        return propertyKey.getLabel();
     }
 
     public int getId() {
@@ -37,12 +41,12 @@ public class ItemProperty implements Serializable {
         this.item = item;
     }
 
-    public GroupProperty getProperty() {
-        return property;
+    public PropertyKey getPropertyKey() {
+        return propertyKey;
     }
 
-    public void setProperty(GroupProperty property) {
-        this.property = property;
+    public void setPropertyKey(PropertyKey propertyKey) {
+        this.propertyKey = propertyKey;
     }
 
     public String getValue() {
@@ -59,12 +63,12 @@ public class ItemProperty implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         ItemProperty that = (ItemProperty) o;
         return Objects.equals(getItem(), that.getItem()) &&
-                Objects.equals(getProperty(), that.getProperty()) &&
+                Objects.equals(getPropertyKey(), that.getPropertyKey()) &&
                 Objects.equals(getValue(), that.getValue());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getItem(), getProperty(), getValue());
+        return Objects.hash(getItem(), getPropertyKey(), getValue());
     }
 }

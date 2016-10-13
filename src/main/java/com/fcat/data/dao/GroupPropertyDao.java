@@ -1,6 +1,6 @@
 package com.fcat.data.dao;
 
-import com.fcat.data.model.GroupProperty;
+import com.fcat.data.model.PropertyKey;
 
-public interface GroupPropertyDao extends GenericDao<GroupProperty, Integer> {
+public interface GroupPropertyDao extends GenericDao<PropertyKey, Integer> {
 }
